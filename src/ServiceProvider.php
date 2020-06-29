@@ -1,13 +1,18 @@
 <?php
 
-namespace ChrisBraybrooke\SPABackend;
+namespace PurpleMountain\Helpers;
 
-use ChrisBraybrooke\NAMESPACE_HERE\Providers\EventServiceProvider;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\FileSystem\FileSystem;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use PurpleMountain\Helpers\Commands\AttachRoleToUser;
+use PurpleMountain\Helpers\Commands\CreateApiToken;
+use PurpleMountain\Helpers\Commands\CreateUser;
+use PurpleMountain\Helpers\Commands\MakeModelResource;
+use PurpleMountain\Helpers\Commands\SyncPermissions;
+use PurpleMountain\Organisations\Providers\EventServiceProvider;
 
-class ServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /** 
      * Put together the path to the config file.
@@ -26,7 +31,7 @@ class ServiceProvider extends ServiceProvider
      */
     private function shortName(): string
     {
-        return 'chrisbraybrooke-package';
+        return 'helpers';
     }
 
 
@@ -46,7 +51,11 @@ class ServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                //
+                CreateUser::class,
+                AttachRoleToUser::class,
+                MakeModelResource::class,
+                SyncPermissions::class,
+                CreateApiToken::class
             ]);
         }
     }
@@ -70,11 +79,6 @@ class ServiceProvider extends ServiceProvider
      */
     private function handleMigrations()
     {
-        $files = new FileSystem();
-        foreach ($files->glob('database/migrations/*_*.php') as $key => $file) {
-            $file->requireOnce($file);
-        }
-
         $this->publishes([
             __DIR__.'/../database/migrations/default.php.stub' => database_path('migrations/2020_03_15_000000_default.php')
         ], $this->shortName() . '-migrations');
@@ -89,7 +93,7 @@ class ServiceProvider extends ServiceProvider
     {
         Route::group([
             'name' => $this->shortName(),
-            'namespace' => 'ChrisBraybrooke\SPABackend\Http\Controllers',
+            'namespace' => 'PurpleMountain\Helpers\Http\Controllers',
             'middleware' => ['web']
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
@@ -106,7 +110,7 @@ class ServiceProvider extends ServiceProvider
         $this->publishes([
             $this->configPath(),
             $this->shortName() . '-config'
-        ]);
+        ], $this->shortName() . '-config');
     }
 
 }

@@ -1,6 +1,6 @@
 {
-    "name": "chrisbraybrooke/chrisbraybrooke-package",
-    "description": "A package by Christian Braybrooke",
+    "name": "purplemountain/helpers",
+    "description": "A simple helpers package for Purple Mountain projects.",
     "authors": [
         {
             "name": "Christian Braybrooke",
@@ -9,14 +9,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "ChrisBraybrooke\\NAMESPACE_HERE\\": "src/"
+            "PurpleMountain\\Helpers\\": "src/"
         }
     },
     "require": {},
     "extra": {
         "laravel": {
             "providers": [
-                "ChrisBraybrooke\\NAMESPACE_HERE\\ServiceProvider"
+                "PurpleMountain\\Helpers\\ServiceProvider"
             ]
         }
     }

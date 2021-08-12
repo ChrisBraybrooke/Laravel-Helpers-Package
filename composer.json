@@ -1,6 +1,6 @@
 {
-    "name": "purplemountain/helpers",
-    "description": "A simple helpers package for Purple Mountain projects.",
+    "name": "chrisbraybrooke/helpers",
+    "description": "A simple helpers package for my projects.",
     "authors": [
         {
             "name": "Christian Braybrooke",
@@ -9,14 +9,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "PurpleMountain\\Helpers\\": "src/"
+            "ChrisBraybrooke\\Helpers\\": "src/"
         }
     },
     "require": {},
     "extra": {
         "laravel": {
             "providers": [
-                "PurpleMountain\\Helpers\\ServiceProvider"
+                "ChrisBraybrooke\\Helpers\\ServiceProvider"
             ]
         }
     }

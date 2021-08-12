@@ -1,19 +1,9 @@
 <?php
 
-namespace PurpleMountain\Helpers\Traits;
+namespace ChrisBraybrooke\Helpers\Traits;
 
 trait HasTax
 {
-    /**
-     * Whether or not tax is included in the price.
-     *
-     * @return bool
-     */
-    public function taxIncluded(): bool
-    {
-        return true;
-    }
-
     /**
      * The total price.
      *

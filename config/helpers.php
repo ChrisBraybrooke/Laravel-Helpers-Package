@@ -1,13 +1,13 @@
 <?php
 
-use App\Permission;
-use App\Role;
-use App\User;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 
 return [
-    'user' => User::class,
+    'user_model' => User::class,
 
-    'permission' => Permission::class,
+    'permission_model' => Permission::class,
 
-    'role' => Role::class
+    'role_model' => Role::class
 ];

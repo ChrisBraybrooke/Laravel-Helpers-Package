@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers\Providers;
+namespace ChrisBraybrooke\Helpers\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as BaseProvider;
 

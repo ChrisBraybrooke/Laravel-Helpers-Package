@@ -1,13 +1,12 @@
 <?php
 
-namespace PurpleMountain\Helpers\Traits;
+namespace ChrisBraybrooke\Helpers\Traits;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait WasCreatedBy
 {
-
     /**
      * The model that should be used for the created by relation.
      *

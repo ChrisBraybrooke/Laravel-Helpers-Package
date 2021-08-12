@@ -1,9 +1,9 @@
 <?php
 
-namespace PurpleMountain\Helpers\Models;
+namespace ChrisBraybrooke\Helpers\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
-use PurpleMountain\Helpers\Traits\HasUUID;
+use ChrisBraybrooke\Helpers\Traits\HasUUID;
 
 class BaseModel extends Model
 {

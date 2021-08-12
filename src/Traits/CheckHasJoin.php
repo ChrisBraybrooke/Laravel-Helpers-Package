@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers\Traits;
+namespace ChrisBraybrooke\Helpers\Traits;
 
 trait CheckHasJoin
 {

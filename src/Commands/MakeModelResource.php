@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers\Commands;
+namespace ChrisBraybrooke\Helpers\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -50,7 +50,6 @@ class MakeModelResource extends Command
             $this->call('make:model', ['name' => $modelName, '--migration' => true, '--pivot' => $pivot]);
             $this->call('make:controller', ['name' => "Api/{$namePlural}Controller", '--api' => true, '--model' => $name]);
             $this->call('make:resource', ['name' => $name]);
-            $this->call('make:resource', ['name' => "{$name}Collection"]);
             $this->call('make:policy', ['name' => "{$name}Policy", '--model' => $name]);
             $this->call('make:request', ['name' => "{$name}CreateRequest"]);
             $this->call('make:request', ['name' => "{$name}UpdateRequest"]);

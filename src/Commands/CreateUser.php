@@ -1,8 +1,8 @@
 <?php
 
-namespace PurpleMountain\Helpers\Commands;
+namespace ChrisBraybrooke\Helpers\Commands;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class CreateUser extends Command
@@ -42,7 +42,7 @@ class CreateUser extends Command
         $email = $this->ask('Email:');
         $password = $this->ask('Password:');
 
-        $user = config('helpers.user')::create([
+        $user = config('helpers.user_model')::create([
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),

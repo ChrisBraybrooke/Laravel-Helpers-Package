@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers\Commands;
+namespace ChrisBraybrooke\Helpers\Commands;
 
 use Illuminate\Console\Command;
 
@@ -37,7 +37,7 @@ class CreateApiToken extends Command
      */
     public function handle()
     {
-        $user = config('helpers.user')::firstWhere('email', $this->argument('userEmail'));
+        $user = config('helpers.user_model')::firstWhere('email', $this->argument('userEmail'));
 
         if ($user) {
             $token = $user->createToken('token-name');

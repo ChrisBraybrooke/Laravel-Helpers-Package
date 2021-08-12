@@ -1,40 +1,23 @@
 <?php
 
-namespace PurpleMountain\Helpers;
+namespace ChrisBraybrooke\Helpers;
 
+use ChrisBraybrooke\Helpers\Commands\AttachRoleToUser;
+use ChrisBraybrooke\Helpers\Commands\CreateApiToken;
+use ChrisBraybrooke\Helpers\Commands\CreateUser;
+use ChrisBraybrooke\Helpers\Commands\MakeAction;
+use ChrisBraybrooke\Helpers\Commands\MakeModelResource;
+use ChrisBraybrooke\Helpers\Commands\MakeTrait;
+use ChrisBraybrooke\Helpers\Commands\PublishCustomStubs;
+use ChrisBraybrooke\Helpers\Commands\SyncPermissions;
+use ChrisBraybrooke\Helpers\Providers\EventServiceProvider;
+use ChrisBraybrooke\Helpers\Providers\MacroServiceProvider;
 use Illuminate\FileSystem\FileSystem;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use PurpleMountain\Helpers\Commands\AttachRoleToUser;
-use PurpleMountain\Helpers\Commands\CreateApiToken;
-use PurpleMountain\Helpers\Commands\CreateUser;
-use PurpleMountain\Helpers\Commands\MakeModelResource;
-use PurpleMountain\Helpers\Commands\SyncPermissions;
-use PurpleMountain\Organisations\Providers\EventServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    /** 
-     * Put together the path to the config file.
-     *
-     * @return string
-     */
-    private function configPath(): string
-    {
-        return __DIR__.'/../config/' . $this->shortName() . '.php';
-    }
-
-    /** 
-     * Get the short name for this package.
-     *
-     * @return string
-     */
-    private function shortName(): string
-    {
-        return 'helpers';
-    }
-
-
     /**
      * Bootstrap the package.
      *
@@ -55,7 +38,10 @@ class ServiceProvider extends BaseServiceProvider
                 AttachRoleToUser::class,
                 MakeModelResource::class,
                 SyncPermissions::class,
-                CreateApiToken::class
+                CreateApiToken::class,
+                MakeTrait::class,
+                MakeAction::class,
+                PublishCustomStubs::class,
             ]);
         }
     }
@@ -67,9 +53,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom($this->configPath(), $this->shortName());
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/helpers.php', 'helpers'
+        );
 
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(MacroServiceProvider::class);
     }
 
     /** 
@@ -81,7 +70,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->publishes([
             __DIR__.'/../database/migrations/default.php.stub' => database_path('migrations/2020_03_15_000000_default.php')
-        ], $this->shortName() . '-migrations');
+        ], 'helpers-migrations');
     }
 
     /** 
@@ -92,8 +81,8 @@ class ServiceProvider extends BaseServiceProvider
     private function handleRoutes()
     {
         Route::group([
-            'name' => $this->shortName(),
-            'namespace' => 'PurpleMountain\Helpers\Http\Controllers',
+            'name' => 'helpers',
+            'namespace' => 'ChrisBraybrooke\Helpers\Http\Controllers',
             'middleware' => ['web']
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
@@ -108,9 +97,7 @@ class ServiceProvider extends BaseServiceProvider
     private function handleConfigs()
     {
         $this->publishes([
-            $this->configPath(),
-            $this->shortName() . '-config'
-        ], $this->shortName() . '-config');
+            __DIR__.'/../config/helpers.php' => config_path('helpers.php'),
+        ], 'helpers-config');
     }
-
 }

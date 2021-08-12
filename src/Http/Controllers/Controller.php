@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers;
+namespace ChrisBraybrooke\Helpers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

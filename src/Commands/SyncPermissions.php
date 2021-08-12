@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleMountain\Helpers\Commands;
+namespace ChrisBraybrooke\Helpers\Commands;
 
 use App\Providers\AuthServiceProvider;
 use Illuminate\Console\Command;
@@ -40,7 +40,7 @@ class SyncPermissions extends Command
     {
         if (method_exists(AuthServiceProvider::class, 'availablePermissions')) {
             foreach (AuthServiceProvider::availablePermissions() as $name => $permission) {
-                config('helpers.permission')::firstOrCreate(['name' => $name], [
+                config('helpers.permission_model')::firstOrCreate(['name' => $name], [
                     'group' => $permission['group'],
                     'description' => $permission['description']
                 ]);
@@ -49,9 +49,9 @@ class SyncPermissions extends Command
             $this->call('permission:cache-reset');
 
             if ($roles = $this->option('role')) {
-                $permissions = config('helpers.permission')::get();
+                $permissions = config('helpers.permission_model')::get();
                 foreach ($roles as $key => $roleName) {
-                    $role = config('helpers.role')::firstOrCreate(['name' => $roleName]);
+                    $role = config('helpers.role_model')::firstOrCreate(['name' => $roleName]);
                     foreach ($permissions as $key => $permission) {
                         $role->givePermissionTo($permission->name);
                     }

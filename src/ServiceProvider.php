@@ -28,9 +28,9 @@ class ServiceProvider extends BaseServiceProvider
         $this->handleRoutes();
         $this->handleConfigs();
 
-        if (env('APP_ENV') === 'local') {
-            $this->handleMigrations();
-        }
+//         if (env('APP_ENV') === 'local') {
+//             $this->handleMigrations();
+//         }
 
         if ($this->app->runningInConsole()) {
             $this->commands([

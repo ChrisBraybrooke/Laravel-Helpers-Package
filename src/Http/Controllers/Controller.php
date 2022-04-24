@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisBraybrooke\Helpers;
+namespace ChrisBraybrooke\Helpers\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

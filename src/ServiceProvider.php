@@ -10,8 +10,10 @@ use ChrisBraybrooke\Helpers\Commands\MakeModelResource;
 use ChrisBraybrooke\Helpers\Commands\MakeTrait;
 use ChrisBraybrooke\Helpers\Commands\PublishCustomStubs;
 use ChrisBraybrooke\Helpers\Commands\SyncPermissions;
+use ChrisBraybrooke\Helpers\Contracts\PermissionChecker;
 use ChrisBraybrooke\Helpers\Providers\EventServiceProvider;
 use ChrisBraybrooke\Helpers\Providers\MacroServiceProvider;
+use ChrisBraybrooke\Helpers\Services\IdentityServerPermissionChecker;
 use Illuminate\FileSystem\FileSystem;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -31,6 +33,12 @@ class ServiceProvider extends BaseServiceProvider
 //         if (env('APP_ENV') === 'local') {
 //             $this->handleMigrations();
 //         }
+
+        $this->app->bind(
+            'permission-checker', function ($app) {
+                return new IdentityServerPermissionChecker();
+            }
+        );
 
         if ($this->app->runningInConsole()) {
             $this->commands([

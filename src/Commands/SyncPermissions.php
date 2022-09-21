@@ -52,7 +52,10 @@ class SyncPermissions extends Command
             if ($roles = $this->option('role')) {
                 $permissions = config('helpers.permission_model')::get();
                 foreach ($roles as $key => $roleName) {
-                    $role = config('helpers.role_model')::firstOrCreate(['name' => $roleName]);
+                    $role = config('helpers.role_model')::firstOrCreate([
+                        'name' => $roleName,
+                        'guard_name' => array_key_first(config('auth.guards')),
+                    ]);
                     foreach ($permissions as $key => $permission) {
                         $role->givePermissionTo($permission->name);
                     }

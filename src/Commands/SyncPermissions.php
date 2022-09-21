@@ -42,6 +42,7 @@ class SyncPermissions extends Command
             foreach (AuthServiceProvider::availablePermissions() as $name => $permission) {
                 config('helpers.permission_model')::firstOrCreate(['name' => $name], [
                     'group' => $permission['group'],
+                    'guard_name' => config('auth.defaults.guard'),
                     'description' => $permission['description']
                 ]);
             }

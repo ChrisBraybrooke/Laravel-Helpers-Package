@@ -40,6 +40,9 @@ class AttachRoleToUser extends Command
         $user = config('helpers.user_model')::firstWhere('email', $this->argument('userEmail'));
 
         if ($user) {
+            // Overide to Assign Role
+            config(['auth.defaults.guard' => array_key_first(config('auth.guards'))]);
+
             $user->assignRole($this->argument('roleName'));
             $this->info("{$user->name} attached to " . $this->argument('roleName'));
         } else {

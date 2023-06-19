@@ -16,9 +16,10 @@ class IdentityServerPermissionChecker
      */
     public function hasPermissionTo($permission): bool
     {
-        $check = Http::withToken(
-            request()->bearerToken()
-        )
+        $check = Http::withOptions(['verify' => config('app.env') !== 'local'])
+            ->withToken(
+                request()->bearerToken()
+            )
             ->get(
                 config('helpers.identity_server_permission_check_url'),
                 [
@@ -40,9 +41,10 @@ class IdentityServerPermissionChecker
      */
     public function hasAccessToAccount($accountId): bool
     {
-        $check = Http::withToken(
-            request()->bearerToken()
-        )
+        $check = Http::withOptions(['verify' => config('app.env') !== 'local'])
+            ->withToken(
+                request()->bearerToken()
+            )
             ->get(
                 Str::replace('{accountId}', $accountId, config('helpers.identity_server_account_check_url'))
             );
@@ -61,9 +63,10 @@ class IdentityServerPermissionChecker
      */
     public function hasAccessToEntity($pathToCheck, $data = null): bool
     {
-        $check = Http::withToken(
-            request()->bearerToken()
-        )
+        $check = Http::withOptions(['verify' => config('app.env') !== 'local'])
+            ->withToken(
+                request()->bearerToken()
+            )
             ->get(config('helpers.identity_server_url') . "/api/{$pathToCheck}/permission-check", $data);
 
         if ($check->successful()) {
